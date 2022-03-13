@@ -28,13 +28,15 @@ public class BlackjackApp {
 		Hand player = new Hand("Player");
 		player.addCard(deck.dealCard());
 		player.addCard(deck.dealCard());
+		System.out.print(player.toString());
+		System.out.println("\t==>  Hand Value: " + player.getHandValue() + "\n");
 
 		Hand dealer = new Hand("Dealer");
 		dealer.addCard(deck.dealCard());
 		dealer.addCard(deck.dealCard());
+		System.out.println(dealer.getShowCard());
 
-		System.out.println("PHV: " + player.getHandValue());
-		System.out.println("DHV: " + dealer.getHandValue());
+//		System.out.println("DHV: " + dealer.getHandValue());
 
 		// Player is dealt cards, shown dealer show card, and decides to hit or stay
 
@@ -48,46 +50,68 @@ public class BlackjackApp {
 
 			dealer.getShowCard();
 
-			System.out.println("1. Hit me!\n2. Stay");
+			System.out.println("\n**** CHOOSE ****\n1. Hit me!\n2. Stay");
 
 			try {
 				choice = sc.nextInt();
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				// TODO Auto-generated catch block1
+
 				System.out.println("Not a valid input. Try again");
 				sc.nextLine(); // clear buffer
 			}
 
 			if (choice == 1) {
 				player.addCard(deck.dealCard());
-				System.out.println(player.toString());
+				System.out.print(player.toString());
+				System.out.println("\t==>  Hand Value: " + player.getHandValue());
 				pBj = player.checkBlackjack();
 				pBust = player.checkBust();
 
 			} else if (choice == 2) {
-				System.out.println("STAYING with: " + player.toString());
+				System.out.println("STAYING with: " + player.toString() + " ==> Hand Value: " + player.getHandValue());
 			} else {
 				System.out.println("Not a valid input. Try again.");
 			}
 		}
-		
+
 		// Dealer logic
-		
+
 		System.out.println("Dealer has: " + dealer.getHand() + "(" + dealer.getHandValue() + ")");
-		
-		
-		
-		while (dealer.getHandValue() < 17 && dBust ) {
+
+		while (dealer.getHandValue() < 17 && (dBust == false) && (pBust == false)) {
 			System.out.println("Dealer must HIT if hand value is less than 17. Hitting..");
-			dealer.addCard(deck.dealCard());
+			Card d = deck.dealCard();
+			dealer.addCard(d);
+			System.out.println("Dealt card: " + d);
+
 			dBj = dealer.checkBlackjack();
 			dBust = dealer.checkBust();
-			if (dealer.getHandValue() > player.getHandValue()) {
-				System.out.println("Dealer wins! " + "(" + + dealer.getHandValue() + ") beats " + "(" + player.getHandValue() + ")");
+
+		}
+		System.out.println("**********************");
+		if (pBust == true) {
+			System.out.println("Dealer wins! " + " Player busted out with " + "(" + player.getHandValue() + ")");
+		} else if (dBust == true) {
+			System.out.println("Player wins! " + " Dealer busted out with " + "(" + dealer.getHandValue() + ")");
+		}
+
+		// If not busts, final analysis
+
+		if (pBust == false && dBust == false) {
+
+			if ((dealer.getHandValue() > player.getHandValue())) {
+				System.out.println("Dealer wins! " + "(" + +dealer.getHandValue() + ") beats " + "("
+						+ player.getHandValue() + ")");
+
+			} else if (dealer.getHandValue() == player.getHandValue()) {
+				System.out.println("PUSH. Nobody wins.");
+			} else {
+				System.out.println("Player wins! " + "(" + +player.getHandValue() + ") beats " + "("
+						+ dealer.getHandValue() + ")");
 			}
 		}
-		
 
 	}
 }

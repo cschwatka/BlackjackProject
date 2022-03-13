@@ -29,8 +29,8 @@ public class Hand {
 
 	public void addCard(Card card) {
 		// TODO needs to come from Deck
-
 		hand.add(card);
+		
 
 	}
 
@@ -39,7 +39,12 @@ public class Hand {
 		int checkValue = getHandValue();
 		if (checkValue == 21) {
 			isBlackjack = true;
-			System.out.println("Blackjack! You win.");
+			System.out.print(player + "has Blackjack! You ");
+			if (player.equals("Player")) {
+			System.out.println("win!");
+			} else {
+				System.out.println("lose!");
+			}
 		} 
 		return isBlackjack;
 	}
@@ -66,7 +71,7 @@ public class Hand {
 
 		int handValue = 0;
 		for (Card dealtCard : this.hand) {
-			System.out.println(dealtCard);
+//			System.out.println(dealtCard);
 			handValue += dealtCard.getValue();
 		}
 
@@ -86,7 +91,7 @@ public class Hand {
 	}
 
 	public String getShowCard() {
-		return "Dealer is showing: " + hand.get(1) + "face up.";
+		return "Dealer is showing: " + hand.get(1) + " face up.";
 	}
 
 	@Override
