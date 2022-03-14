@@ -7,7 +7,6 @@ import java.util.Objects;
 public class Hand {
 
 	private List<Card> hand = new ArrayList<>();
-	private int handValue;
 	private String player;
 
 	// CONSTRUCTORS
@@ -25,8 +24,6 @@ public class Hand {
 
 	// GETTERS & SETTERS
 
-	// TODO game logic
-
 	public void addCard(Card card) {
 		// TODO needs to come from Deck
 		hand.add(card);
@@ -39,12 +36,7 @@ public class Hand {
 		int checkValue = getHandValue();
 		if (checkValue == 21) {
 			isBlackjack = true;
-			System.out.print(player + "has Blackjack! You ");
-			if (player.equals("Player")) {
-			System.out.println("win!");
-			} else {
-				System.out.println("lose!");
-			}
+			System.out.print(player + "has Blackjack!");
 		} 
 		return isBlackjack;
 	}
@@ -78,9 +70,6 @@ public class Hand {
 		return handValue;
 	}
 
-	public void setHandValue(int handValue) {
-		this.handValue = handValue;
-	}
 
 	public String getPlayer() {
 		return player;

@@ -1,7 +1,5 @@
 package com.skilldistillery.cards.blackjack;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.cards.common.Card;
@@ -14,17 +12,16 @@ public class BlackjackApp {
 		Scanner sc = new Scanner(System.in);
 		BlackjackApp app = new BlackjackApp();
 
-		app.start(sc);
-
+		app.run(sc);
 		sc.close();
 	}
 
-	public void start(Scanner sc) {
+	public void run(Scanner sc) {
 
 		Deck deck = new Deck();
 		deck.shuffle();
 
-		// Deal player 2 cards, then dealer 2 cards (2)
+		// SETUP: Deal player 2 cards, then dealer 2 cards (2)
 		Hand player = new Hand("Player");
 		player.addCard(deck.dealCard());
 		player.addCard(deck.dealCard());
@@ -36,10 +33,8 @@ public class BlackjackApp {
 		dealer.addCard(deck.dealCard());
 		System.out.println(dealer.getShowCard());
 
-//		System.out.println("DHV: " + dealer.getHandValue());
 
-		// Player is dealt cards, shown dealer show card, and decides to hit or stay
-
+		// PLAYER TURN: Player is shown dealer show card, and decides to hit or stay
 		boolean pBj = player.checkBlackjack();
 		boolean pBust = player.checkBust();
 		boolean dBj = dealer.checkBlackjack();
@@ -56,7 +51,6 @@ public class BlackjackApp {
 				choice = sc.nextInt();
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block1
 
 				System.out.println("Not a valid input. Try again");
 				sc.nextLine(); // clear buffer
@@ -76,8 +70,7 @@ public class BlackjackApp {
 			}
 		}
 
-		// Dealer logic
-
+		// DEALER TURN: Dealer shows his hole card and hits if value is less than 17 (stays if not). 
 		System.out.println("Dealer has: " + dealer.getHand() + "(" + dealer.getHandValue() + ")");
 
 		while (dealer.getHandValue() < 17 && (dBust == false) && (pBust == false)) {
@@ -90,6 +83,8 @@ public class BlackjackApp {
 			dBust = dealer.checkBust();
 
 		}
+		
+		// Final check for busts
 		System.out.println("**********************");
 		if (pBust == true) {
 			System.out.println("Dealer wins! " + " Player busted out with " + "(" + player.getHandValue() + ")");
@@ -97,7 +92,7 @@ public class BlackjackApp {
 			System.out.println("Player wins! " + " Dealer busted out with " + "(" + dealer.getHandValue() + ")");
 		}
 
-		// If not busts, final analysis
+		// If no busts, final win/lose decision analysis
 
 		if (pBust == false && dBust == false) {
 
